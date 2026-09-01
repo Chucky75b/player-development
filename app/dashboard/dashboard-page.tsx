@@ -19,7 +19,7 @@ export default async function DashboardPage() {
     .from("profiles")
     .select("first_name, last_name, role")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   const displayName = profile?.first_name
     ? `${profile.first_name} ${profile.last_name ?? ""}`.trim()
