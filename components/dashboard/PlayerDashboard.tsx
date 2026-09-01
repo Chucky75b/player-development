@@ -14,7 +14,7 @@ export function PlayerDashboard({ displayName }: Props) {
           Strength
         </h2>
         <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-          Nessun dato ancora. Il tuo coach popolerà questa sezione.
+          No data yet. Your coach will populate this section.
         </p>
       </section>
 
@@ -23,10 +23,10 @@ export function PlayerDashboard({ displayName }: Props) {
           Building Blocks
         </h2>
         <p className="mt-1 text-xs text-[var(--color-ink-muted)]">
-          Su cosa lavorare
+          What to work on
         </p>
         <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-          Nessun dato ancora. Il tuo coach popolerà questa sezione.
+          No data yet. Your coach will populate this section.
         </p>
       </section>
     </div>

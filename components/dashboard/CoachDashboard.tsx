@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 
 type Props = {
@@ -26,21 +27,22 @@ export async function CoachDashboard({ displayName }: Props) {
 
         {!players || players.length === 0 ? (
           <p className="px-5 py-4 text-sm text-[var(--color-ink-tertiary)]">
-            Nessun giocatore ancora. Crea un account con ruolo &quot;player&quot;
-            da Supabase → Authentication.
+            No players yet. Create an account with the role &quot;player&quot; in Supabase → Authentication.
           </p>
         ) : (
           <ul className="divide-y divide-[var(--color-line-soft)]">
             {players.map((player) => {
               const name = player.first_name
                 ? `${player.first_name} ${player.last_name ?? ""}`.trim()
-                : "Nome non impostato";
+                : "Name not set";
               return (
-                <li
-                  key={player.id}
-                  className="px-5 py-3 text-sm text-[var(--color-ink-primary)]"
-                >
-                  {name}
+                <li key={player.id}>
+                  <Link
+                    href={`/players/${player.id}`}
+                    className="block px-5 py-3 text-sm text-[var(--color-ink-primary)] hover:bg-[var(--color-surface-2)]"
+                  >
+                    {name}
+                  </Link>
                 </li>
               );
             })}
