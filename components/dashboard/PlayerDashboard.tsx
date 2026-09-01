@@ -11,7 +11,7 @@ export function PlayerDashboard({ displayName }: Props) {
 
       <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
         <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-          Strength
+          Anchors
         </h2>
         <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
           No data yet. Your coach will populate this section.
@@ -20,7 +20,7 @@ export function PlayerDashboard({ displayName }: Props) {
 
       <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
         <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-          Building Blocks
+          Growth Areas
         </h2>
         <p className="mt-1 text-xs text-[var(--color-ink-muted)]">
           What to work on
