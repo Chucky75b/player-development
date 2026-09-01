@@ -28,7 +28,7 @@ export function LoginForm() {
           autoComplete="email"
           required
           className="rounded-[4px] border border-[var(--color-line-default)] bg-[var(--color-surface-2)] px-3.5 py-2.5 text-[15px] text-[var(--color-ink-primary)] outline-none placeholder:text-[var(--color-ink-muted)] focus:border-[var(--color-court)] focus:ring-1 focus:ring-[var(--color-court)]"
-          placeholder="nome@club.com"
+          placeholder="you@example.com"
         />
       </div>
 
@@ -44,7 +44,7 @@ export function LoginForm() {
             href="/forgot-password"
             className="text-xs text-[var(--color-ink-tertiary)] underline decoration-[var(--color-line-strong)] underline-offset-2 hover:text-[var(--color-court-strong)]"
           >
-            Password dimenticata?
+            Forgot Password?
           </Link>
         </div>
         <input
@@ -72,7 +72,7 @@ export function LoginForm() {
         disabled={isPending}
         className="mt-1 rounded-[4px] bg-[var(--color-court)] px-4 py-2.5 font-display text-base font-semibold uppercase tracking-wide text-[#1a1206] transition-colors hover:bg-[var(--color-court-strong)] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isPending ? "Accesso in corso…" : "Entra"}
+        {isPending ? "Logging in…" : "Sign in"}
       </button>
     </form>
   );
