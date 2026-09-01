@@ -40,7 +40,7 @@ export default async function DashboardPage() {
               type="submit"
               className="rounded-[4px] border border-[var(--color-line-default)] px-3 py-1.5 text-sm text-[var(--color-ink-secondary)] hover:border-[var(--color-line-strong)] hover:text-[var(--color-ink-primary)]"
             >
-              Esci
+              Log out
             </button>
           </form>
         </header>
