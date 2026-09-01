@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* Superfici — "palestra di sera": charcoal-navy, non nero puro */
+  --color-surface-0: #10131a;
+  --color-surface-1: #161a23;
+  --color-surface-2: #1d222d;
+  --color-surface-3: #262c3a;
+
+  /* Testo */
+  --color-ink-primary: #eef0f4;
+  --color-ink-secondary: #a6adbb;
+  --color-ink-tertiary: #6f7686;
+  --color-ink-muted: #4a5061;
+
+  /* Bordi */
+  --color-line-soft: #232935;
+  --color-line-default: #2e3543;
+  --color-line-strong: #3c4457;
+
+  /* Accento unico — legno di parquet / luce del tabellone */
+  --color-court: #cf8b3c;
+  --color-court-soft: #cf8b3c26;
+  --color-court-strong: #e6a556;
+
+  /* Semantico */
+  --color-danger: #d96a5a;
+  --color-success: #6fae7f;
+
+  --font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-data: "Space Mono", ui-monospace, monospace;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-surface-0);
+  color: var(--color-ink-primary);
+  font-family: var(--font-body);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
