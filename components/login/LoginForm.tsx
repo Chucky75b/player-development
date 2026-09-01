@@ -72,7 +72,7 @@ export function LoginForm() {
         disabled={isPending}
         className="mt-1 rounded-[4px] bg-[var(--color-court)] px-4 py-2.5 font-display text-base font-semibold uppercase tracking-wide text-[#1a1206] transition-colors hover:bg-[var(--color-court-strong)] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isPending ? "Logging in…" : "Sign in"}
+        {isPending ? "Accessing…" : "Sign In"}
       </button>
     </form>
   );

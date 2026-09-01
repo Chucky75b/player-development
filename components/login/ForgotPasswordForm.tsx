@@ -17,8 +17,7 @@ export function ForgotPasswordForm() {
   if (state.status === "sent") {
     return (
       <p className="rounded-[4px] border border-[var(--color-line-default)] bg-[var(--color-surface-2)] px-3.5 py-3 text-sm text-[var(--color-ink-secondary)]">
-        Se l&apos;indirizzo è collegato a un account, riceverai a breve
-        un&apos;email con le istruzioni per reimpostare la password.
+        If the address is linked to an account, you will receive an email with instructions to reset your password.
       </p>
     );
   }
@@ -39,7 +38,7 @@ export function ForgotPasswordForm() {
           autoComplete="email"
           required
           className="rounded-[4px] border border-[var(--color-line-default)] bg-[var(--color-surface-2)] px-3.5 py-2.5 text-[15px] text-[var(--color-ink-primary)] outline-none placeholder:text-[var(--color-ink-muted)] focus:border-[var(--color-court)] focus:ring-1 focus:ring-[var(--color-court)]"
-          placeholder="nome@club.com"
+          placeholder="you@example.com"
         />
       </div>
 
@@ -48,7 +47,7 @@ export function ForgotPasswordForm() {
         disabled={isPending}
         className="rounded-[4px] bg-[var(--color-court)] px-4 py-2.5 font-display text-base font-semibold uppercase tracking-wide text-[#1a1206] transition-colors hover:bg-[var(--color-court-strong)] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isPending ? "Invio…" : "Invia link di reset"}
+        {isPending ? "Sending…" : "Send Reset Link"}
       </button>
     </form>
   );
