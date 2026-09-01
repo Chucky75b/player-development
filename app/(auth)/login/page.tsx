@@ -44,8 +44,7 @@ export default function LoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-[var(--color-ink-muted)]">
-          Gli account vengono creati dallo staff. Contatta il tuo coach se non
-          hai ancora un accesso.
+          The accounts are created by the staff. Contact your coach if you do not yet have access.
         </p>
       </div>
     </main>

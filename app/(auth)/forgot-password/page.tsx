@@ -10,7 +10,7 @@ export default function ForgotPasswordPage() {
             Roster Access
           </span>
           <h1 className="font-display text-[28px] font-bold uppercase leading-[0.95] tracking-tight text-[var(--color-ink-primary)]">
-            Reimposta password
+            Forgot Password
           </h1>
         </div>
 
@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
           href="/login"
           className="mt-6 inline-block text-center text-xs text-[var(--color-ink-tertiary)] underline decoration-[var(--color-line-strong)] underline-offset-2 hover:text-[var(--color-court-strong)]"
         >
-          ← Torna al login
+          ← Back to login
         </Link>
       </div>
     </main>
