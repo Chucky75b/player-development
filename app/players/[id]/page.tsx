@@ -50,10 +50,11 @@ export default async function PlayerDetailPage({ params }: Props) {
   }
 
   const displayName = `${player.first_name} ${player.last_name}`.trim();
-  const positions = [player.first_position, player.second_position]
-    .filter(Boolean)
-    .map((p) => POSITION_LABEL[p as string])
-    .join(" / ");
+  const jerseyLabel =
+    player.jersey_number != null ? `#${player.jersey_number}` : "";
+  const positions = [player.first_position, player.second_position].filter(
+    (p): p is string => Boolean(p)
+  );
 
   return (
     <main className="min-h-screen px-6 py-10">
@@ -67,16 +68,24 @@ export default async function PlayerDetailPage({ params }: Props) {
 
         <div>
           <h1 className="font-display text-2xl font-bold uppercase tracking-tight text-[var(--color-ink-primary)]">
-            {displayName}
+            {displayName} {jerseyLabel}
           </h1>
-          <p className="font-data text-xs text-[var(--color-ink-tertiary)]">
-            {[
-              player.jersey_number != null ? `#${player.jersey_number}` : null,
-              positions || null,
-            ]
-              .filter(Boolean)
-              .join(" · ")}
-          </p>
+          {positions.length > 0 && (
+            <div className="mt-3 flex items-center gap-2">
+              {positions.map((p, i) => (
+                <span key={p} className="flex items-center gap-2">
+                  {i > 0 && (
+                    <span className="text-sm text-[var(--color-ink-muted)]">
+                      /
+                    </span>
+                  )}
+                  <span className="rounded-full border border-[var(--color-line-default)] bg-[var(--color-surface-2)] px-3 py-1 font-data text-sm text-[var(--color-ink-secondary)]">
+                    {POSITION_LABEL[p]}
+                  </span>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
