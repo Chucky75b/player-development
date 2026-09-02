@@ -62,7 +62,7 @@ export default async function PlayerDetailPage({ params }: Props) {
           href="/dashboard"
           className="text-xs text-[var(--color-ink-tertiary)] underline decoration-[var(--color-line-strong)] underline-offset-2 hover:text-[var(--color-court-strong)]"
         >
-          ← Torna al roster
+          ← Back to roster
         </Link>
 
         <div>
@@ -81,22 +81,31 @@ export default async function PlayerDetailPage({ params }: Props) {
 
         <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
           <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-            Strength
+            Anchors
           </h2>
           <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-            Nessun dato ancora.
+            No data yet.
           </p>
         </section>
 
         <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
           <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-            Building Blocks
+            Growth Areas
           </h2>
           <p className="mt-1 text-xs text-[var(--color-ink-muted)]">
-            Su cosa lavorare
+            What to work on
           </p>
           <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-            Nessun dato ancora.
+            No data yet.
+          </p>
+        </section>
+
+        <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
+          <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
+            Priorities
+          </h2>
+          <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
+            No data yet.
           </p>
         </section>
       </div>
