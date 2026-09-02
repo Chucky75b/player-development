@@ -23,8 +23,11 @@ export async function CoachDashboard({ displayName }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
+      <h3 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
+          Welcome back,
+        </h3>
       <h1 className="font-display text-2xl font-bold uppercase tracking-tight text-[var(--color-ink-primary)]">
-        Welcome back, {displayName}
+        {displayName}
       </h1>
 
       <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)]">

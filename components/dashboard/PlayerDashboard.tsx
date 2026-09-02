@@ -42,7 +42,7 @@ export async function PlayerDashboard({ displayName }: Props) {
   const { data: player } = user
     ? await supabase
         .from("players")
-        .select("date_birth, first_position, second_position, updated_at")
+        .select("date_birth, first_position, second_position, jersey_number, updated_at")
         .eq("user_id", user.id)
         .maybeSingle()
     : { data: null };
@@ -60,8 +60,11 @@ export async function PlayerDashboard({ displayName }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <div>
+        <h3 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
+          Welcome back,
+        </h3>
         <h1 className="font-display text-2xl font-bold uppercase tracking-tight text-[var(--color-ink-primary)]">
-          Welcome back, {displayName}
+          {displayName} {player?.jersey_number !== null ? `#${player.jersey_number}` : ""}
         </h1>
         {(birthDate || positions) && (
           <p className="mt-1 font-data text-xs text-[var(--color-ink-tertiary)]">
