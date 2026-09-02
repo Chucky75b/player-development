@@ -6,6 +6,14 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
+const POSITION_LABEL: Record<string, string> = {
+  point_guard: "Point Guard",
+  guard: "Guard",
+  forward: "Forward",
+  power_forward: "Power Forward",
+  center: "Center",
+};
+
 export default async function PlayerDetailPage({ params }: Props) {
   const { id } = await params;
   const supabase = await createClient();
@@ -30,18 +38,22 @@ export default async function PlayerDetailPage({ params }: Props) {
   }
 
   const { data: player } = await supabase
-    .from("profiles")
-    .select("first_name, last_name, role")
+    .from("players")
+    .select(
+      "first_name, last_name, jersey_number, first_position, second_position, status"
+    )
     .eq("id", id)
     .maybeSingle();
 
-  if (!player || player.role !== "player") {
+  if (!player) {
     notFound();
   }
 
-  const displayName = player.first_name
-    ? `${player.first_name} ${player.last_name ?? ""}`.trim()
-    : "Name not set";
+  const displayName = `${player.first_name} ${player.last_name}`.trim();
+  const positions = [player.first_position, player.second_position]
+    .filter(Boolean)
+    .map((p) => POSITION_LABEL[p as string])
+    .join(" / ");
 
   return (
     <main className="min-h-screen px-6 py-10">
@@ -50,31 +62,41 @@ export default async function PlayerDetailPage({ params }: Props) {
           href="/dashboard"
           className="text-xs text-[var(--color-ink-tertiary)] underline decoration-[var(--color-line-strong)] underline-offset-2 hover:text-[var(--color-court-strong)]"
         >
-          ← Back to roster
+          ← Torna al roster
         </Link>
 
-        <h1 className="font-display text-2xl font-bold uppercase tracking-tight text-[var(--color-ink-primary)]">
-          {displayName}
-        </h1>
+        <div>
+          <h1 className="font-display text-2xl font-bold uppercase tracking-tight text-[var(--color-ink-primary)]">
+            {displayName}
+          </h1>
+          <p className="font-data text-xs text-[var(--color-ink-tertiary)]">
+            {[
+              player.jersey_number != null ? `#${player.jersey_number}` : null,
+              positions || null,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
+          </p>
+        </div>
 
         <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
           <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-            Anchors
+            Strength
           </h2>
           <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-            No data yet.
+            Nessun dato ancora.
           </p>
         </section>
 
         <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
           <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-            Growth Areas
+            Building Blocks
           </h2>
           <p className="mt-1 text-xs text-[var(--color-ink-muted)]">
-            What to work on
+            Su cosa lavorare
           </p>
           <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-            No data yet.
+            Nessun dato ancora.
           </p>
         </section>
       </div>
