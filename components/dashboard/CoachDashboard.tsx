@@ -5,13 +5,20 @@ type Props = {
   displayName: string;
 };
 
+const POSITION_LABEL: Record<string, string> = {
+  point_guard: "PG",
+  guard: "G",
+  forward: "F",
+  power_forward: "PF",
+  center: "C",
+};
+
 export async function CoachDashboard({ displayName }: Props) {
   const supabase = await createClient();
 
   const { data: players } = await supabase
-    .from("profiles")
-    .select("id, first_name, last_name")
-    .eq("role", "player")
+    .from("players")
+    .select("id, first_name, last_name, jersey_number, first_position, status")
     .order("first_name", { ascending: true });
 
   return (
@@ -27,21 +34,39 @@ export async function CoachDashboard({ displayName }: Props) {
 
         {!players || players.length === 0 ? (
           <p className="px-5 py-4 text-sm text-[var(--color-ink-tertiary)]">
-            No players yet. Create an account with the role &quot;player&quot; in Supabase → Authentication.
+            Nessun giocatore ancora.
           </p>
         ) : (
           <ul className="divide-y divide-[var(--color-line-soft)]">
             {players.map((player) => {
-              const name = player.first_name
-                ? `${player.first_name} ${player.last_name ?? ""}`.trim()
-                : "Name not set";
+              const name = `${player.first_name} ${player.last_name}`.trim();
+              const position = player.first_position
+                ? POSITION_LABEL[player.first_position]
+                : null;
               return (
                 <li key={player.id}>
                   <Link
                     href={`/players/${player.id}`}
-                    className="block px-5 py-3 text-sm text-[var(--color-ink-primary)] hover:bg-[var(--color-surface-2)]"
+                    className="flex items-center justify-between px-5 py-3 text-sm text-[var(--color-ink-primary)] hover:bg-[var(--color-surface-2)]"
                   >
-                    {name}
+                    <span>
+                      {name}
+                      {player.status !== "active" && (
+                        <span className="ml-2 text-xs text-[var(--color-ink-muted)]">
+                          ({player.status})
+                        </span>
+                      )}
+                    </span>
+                    <span className="font-data text-xs text-[var(--color-ink-tertiary)]">
+                      {[
+                        player.jersey_number != null
+                          ? `#${player.jersey_number}`
+                          : null,
+                        position,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </span>
                   </Link>
                 </li>
               );
