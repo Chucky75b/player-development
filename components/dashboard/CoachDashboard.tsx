@@ -34,7 +34,7 @@ export async function CoachDashboard({ displayName }: Props) {
 
         {!players || players.length === 0 ? (
           <p className="px-5 py-4 text-sm text-[var(--color-ink-tertiary)]">
-            Nessun giocatore ancora.
+            No players yet.
           </p>
         ) : (
           <ul className="divide-y divide-[var(--color-line-soft)]">
