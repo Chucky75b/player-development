@@ -23,12 +23,14 @@ export async function CoachDashboard({ displayName }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
+      <div>
       <h3 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
           Welcome back,
         </h3>
       <h1 className="font-display text-2xl font-bold uppercase tracking-tight text-[var(--color-ink-primary)]">
         {displayName}
       </h1>
+      </div>
 
       <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)]">
         <h2 className="border-b border-[var(--color-line-soft)] px-5 py-3 font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
@@ -60,7 +62,7 @@ export async function CoachDashboard({ displayName }: Props) {
                         </span>
                       )}
                     </span>
-                    <span className="font-data text-xs text-[var(--color-ink-tertiary)]">
+                    <span className="font-data text-xs text-[var(--color-court)]">
                       {[
                         player.jersey_number != null
                           ? `#${player.jersey_number}`
