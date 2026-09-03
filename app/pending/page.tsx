@@ -20,15 +20,19 @@ export default async function PendingPage() {
           Roster Access
         </span>
         <h1 className="mt-1 font-display text-2xl font-bold uppercase tracking-tight text-[var(--color-ink-primary)]">
-          Your profile is being reviewed
+          Email verified
         </h1>
         <p className="mt-4 text-sm text-[var(--color-ink-tertiary)]">
-          Your account has been created. The staff still needs to review and
-          activate it — you&apos;ll get an email at{" "}
+          Your email address{" "}
           <span className="text-[var(--color-ink-secondary)]">
             {user.email}
           </span>{" "}
-          as soon as it&apos;s ready.
+          is confirmed. Your profile will be available shortly — the staff
+          still needs to review and activate your account.
+        </p>
+        <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
+          If you have any questions in the meantime, contact your coach
+          directly.
         </p>
 
         <form action={logout} className="mt-8 inline-block">
