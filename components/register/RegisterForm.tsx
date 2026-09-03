@@ -20,8 +20,13 @@ export function RegisterForm() {
   if (state.status === "check-email") {
     return (
       <p className="rounded-[4px] border border-[var(--color-line-default)] bg-[var(--color-surface-2)] px-3.5 py-3 text-sm text-[var(--color-ink-secondary)]">
-        Check your inbox to confirm your email. Once your account is
-        reviewed and activated by the staff, you&apos;ll be able to sign in.
+        Check your inbox to confirm your email — the message will come from{" "}
+        <span className="text-[var(--color-ink-primary)]">
+          Supabase Auth
+        </span>{" "}
+        (noreply@mail.app.supabase.io), not from the club. Once your account
+        is reviewed and activated by the staff, you&apos;ll be able to sign
+        in.
       </p>
     );
   }
