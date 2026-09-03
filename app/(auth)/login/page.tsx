@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LoginForm } from "@/components/login/LoginForm";
 
 export default function LoginPage() {
@@ -7,7 +8,8 @@ export default function LoginPage() {
       <svg
         aria-hidden="true"
         viewBox="0 0 800 800"
-        className="pointer-events-none absolute -top-40 left-1/2 h-[900px] w-[900px] -translate-x-1/2 opacity-[0.07]"
+        // className="pointer-events-none absolute top-1/2 left-1/2 h-[900px] w-[900px] -translate-x-1/2 opacity-[0.07]"
+        className="pointer-events-none absolute h-[900px] w-[900px] opacity-[0.07]"
       >
         <circle
           cx="400"
@@ -19,16 +21,16 @@ export default function LoginPage() {
         />
         <line
           x1="0"
-          y1="620"
+          y1="400"
           x2="800"
-          y2="620"
+          y2="400"
           stroke="var(--color-court)"
           strokeWidth="2"
         />
       </svg>
 
       <div className="relative w-full max-w-[380px]">
-        <div className="mb-8 flex flex-col gap-1">
+        <div className="mb-8 flex flex-col gap-1 text-center">
           <span className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
             Roster Access
           </span>
@@ -44,7 +46,13 @@ export default function LoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-[var(--color-ink-muted)]">
-          The accounts are created by the staff. Contact your coach if you do not yet have access.
+          Don't have an account?{" "}
+          <Link
+            href="/register"
+            className="underline decoration-[var(--color-line-strong)] underline-offset-2 hover:text-[var(--color-court-strong)]"
+          >
+            Create account
+          </Link>
         </p>
       </div>
     </main>
