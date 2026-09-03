@@ -5,7 +5,7 @@ export default function ForgotPasswordPage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
       <div className="w-full max-w-[380px]">
-        <div className="mb-8 flex flex-col gap-1">
+        <div className="mb-8 flex flex-col gap-1 text-center">
           <span className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
             Roster Access
           </span>
