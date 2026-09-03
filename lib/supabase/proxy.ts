@@ -7,8 +7,8 @@ type CookieToSet = {
   options: CookieOptions;
 };
 
-// Rotte accessibili senza sessione attiva.
-const PUBLIC_PATHS = ["/login", "/auth"];
+// Routes reachable without an active session.
+const PUBLIC_PATHS = ["/login", "/register", "/forgot-password", "/auth"];
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -34,23 +34,46 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // IMPORTANTE: non rimuovere. Rinfresca il token e mantiene sincronizzati
-  // i cookie tra request e response.
+  const pathname = request.nextUrl.pathname;
+  const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
+
+  // IMPORTANT: keep this call. It refreshes the token and keeps cookies
+  // in sync between request and response.
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isPublicPath = PUBLIC_PATHS.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
+  if (!user) {
+    if (!isPublicPath) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+    return supabaseResponse;
+  }
 
-  if (!user && !isPublicPath) {
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("status")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  const status = profile?.status ?? "pending";
+  const homePath = status === "pending" ? "/pending" : "/dashboard";
+
+  if (isPublicPath) {
     const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = homePath;
     return NextResponse.redirect(url);
   }
 
-  if (user && request.nextUrl.pathname === "/login") {
+  if (status === "pending" && pathname !== "/pending") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/pending";
+    return NextResponse.redirect(url);
+  }
+
+  if (status === "active" && pathname === "/pending") {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
