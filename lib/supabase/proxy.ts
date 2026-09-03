@@ -35,7 +35,9 @@ export async function updateSession(request: NextRequest) {
   );
 
   const pathname = request.nextUrl.pathname;
-  const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
+  const isPublicPath =
+    pathname === "/" ||
+    PUBLIC_PATHS.some((path) => pathname.startsWith(path));
 
   // IMPORTANT: keep this call. It refreshes the token and keeps cookies
   // in sync between request and response.
