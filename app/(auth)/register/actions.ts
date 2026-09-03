@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 export type RegisterState = {
@@ -25,7 +26,7 @@ export async function register(
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -38,5 +39,11 @@ export async function register(
     return { status: "error", error: "Could not create the account." };
   }
 
+  // Email confirmation disabled in Supabase → session already active.
+  if (data.session) {
+    redirect("/pending");
+  }
+
+  // Email confirmation enabled → wait for the user to click the link.
   return { status: "check-email" };
 }
