@@ -31,7 +31,7 @@ export async function register(
     password,
     options: {
       data: { first_name: firstName, last_name: lastName, role },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/pending`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/auth/confirm`,
     },
   });
 
