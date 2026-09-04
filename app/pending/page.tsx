@@ -40,7 +40,7 @@ export default async function PendingPage() {
             type="submit"
             className="rounded-[4px] border border-[var(--color-line-default)] px-4 py-2 text-sm text-[var(--color-ink-secondary)] hover:border-[var(--color-line-strong)] hover:text-[var(--color-ink-primary)]"
           >
-            Sign out
+            Close
           </button>
         </form>
       </div>
