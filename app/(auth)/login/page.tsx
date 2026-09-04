@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { LoginForm } from "@/components/login/LoginForm";
+import { ResendConfirmation } from "@/components/login/ResendConfirmation";
 
 export default function LoginPage() {
   return (
@@ -8,7 +10,6 @@ export default function LoginPage() {
       <svg
         aria-hidden="true"
         viewBox="0 0 800 800"
-        // className="pointer-events-none absolute top-1/2 left-1/2 h-[900px] w-[900px] -translate-x-1/2 opacity-[0.07]"
         className="pointer-events-none absolute h-[900px] w-[900px] opacity-[0.07]"
       >
         <circle
@@ -54,6 +55,10 @@ export default function LoginPage() {
             Create account
           </Link>
         </p>
+
+        <Suspense fallback={null}>
+          <ResendConfirmation />
+        </Suspense>
       </div>
     </main>
   );
