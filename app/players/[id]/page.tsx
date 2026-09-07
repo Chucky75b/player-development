@@ -1,6 +1,9 @@
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { AnchorsSection } from "@/components/players/AnchorsSection";
+import { GrowthAreasSection } from "@/components/players/GrowthAreasSection";
+import { PrioritiesSection } from "@/components/players/PrioritiesSection";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -49,6 +52,25 @@ export default async function PlayerDetailPage({ params }: Props) {
     notFound();
   }
 
+  const [{ data: anchors }, { data: growthAreas }, { data: priorities }] =
+    await Promise.all([
+      supabase
+        .from("anchors")
+        .select("id, title, description")
+        .eq("player_id", id)
+        .order("created_at", { ascending: true }),
+      supabase
+        .from("growth_areas")
+        .select("id, title, description, category, status")
+        .eq("player_id", id)
+        .order("created_at", { ascending: true }),
+      supabase
+        .from("priorities")
+        .select("id, title, description, status")
+        .eq("player_id", id)
+        .order("created_at", { ascending: true }),
+    ]);
+
   const displayName = `${player.first_name} ${player.last_name}`.trim();
   const jerseyLabel =
     player.jersey_number != null ? `#${player.jersey_number}` : "";
@@ -88,35 +110,12 @@ export default async function PlayerDetailPage({ params }: Props) {
           )}
         </div>
 
-        <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
-          <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-            Anchors
-          </h2>
-          <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-            No data yet.
-          </p>
-        </section>
-
-        <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
-          <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-            Growth Areas
-          </h2>
-          <p className="mt-1 text-xs text-[var(--color-ink-muted)]">
-            What to work on
-          </p>
-          <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-            No data yet.
-          </p>
-        </section>
-
-        <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
-          <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-            Priorities
-          </h2>
-          <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-            No data yet.
-          </p>
-        </section>
+        <AnchorsSection playerId={id} initialItems={anchors ?? []} />
+        <GrowthAreasSection
+          playerId={id}
+          initialItems={growthAreas ?? []}
+        />
+        <PrioritiesSection playerId={id} initialItems={priorities ?? []} />
       </div>
     </main>
   );
