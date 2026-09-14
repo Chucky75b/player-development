@@ -141,3 +141,41 @@ export async function deletePriority(playerId: string, id: string) {
   await supabase.from("priorities").delete().eq("id", id);
   revalidatePath(`/players/${playerId}`);
 }
+
+export async function saveDrill(
+  playerId: string,
+  values: { id?: string; title: string; description: string; status: string }
+) {
+  const supabase = await assertStaff();
+
+  const query = values.id
+    ? supabase
+        .from("drills")
+        .update({
+          title: values.title,
+          description: values.description,
+          status: values.status,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", values.id)
+    : supabase.from("drills").insert({
+        player_id: playerId,
+        title: values.title,
+        description: values.description,
+        status: values.status,
+      });
+
+  const { data, error } = await query
+    .select("id, title, description, status")
+    .single();
+
+  revalidatePath(`/players/${playerId}`);
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function deleteDrill(playerId: string, id: string) {
+  const supabase = await assertStaff();
+  await supabase.from("drills").delete().eq("id", id);
+  revalidatePath(`/players/${playerId}`);
+}

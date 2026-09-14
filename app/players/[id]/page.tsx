@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { AnchorsSection } from "@/components/players/AnchorsSection";
 import { GrowthAreasSection } from "@/components/players/GrowthAreasSection";
 import { PrioritiesSection } from "@/components/players/PrioritiesSection";
+import { DrillsSection } from "@/components/players/DrillsSection";
+import { FeedbackList } from "@/components/players/FeedbackList";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -52,24 +54,39 @@ export default async function PlayerDetailPage({ params }: Props) {
     notFound();
   }
 
-  const [{ data: anchors }, { data: growthAreas }, { data: priorities }] =
-    await Promise.all([
-      supabase
-        .from("anchors")
-        .select("id, title, description")
-        .eq("player_id", id)
-        .order("created_at", { ascending: true }),
-      supabase
-        .from("growth_areas")
-        .select("id, title, description, category, status")
-        .eq("player_id", id)
-        .order("created_at", { ascending: true }),
-      supabase
-        .from("priorities")
-        .select("id, title, description, status")
-        .eq("player_id", id)
-        .order("created_at", { ascending: true }),
-    ]);
+  const [
+    { data: anchors },
+    { data: growthAreas },
+    { data: priorities },
+    { data: drills },
+    { data: feedback },
+  ] = await Promise.all([
+    supabase
+      .from("anchors")
+      .select("id, title, description")
+      .eq("player_id", id)
+      .order("created_at", { ascending: true }),
+    supabase
+      .from("growth_areas")
+      .select("id, title, description, category, status")
+      .eq("player_id", id)
+      .order("created_at", { ascending: true }),
+    supabase
+      .from("priorities")
+      .select("id, title, description, status")
+      .eq("player_id", id)
+      .order("created_at", { ascending: true }),
+    supabase
+      .from("drills")
+      .select("id, title, description, status")
+      .eq("player_id", id)
+      .order("created_at", { ascending: true }),
+    supabase
+      .from("feedback")
+      .select("id, content, created_at")
+      .eq("player_id", id)
+      .order("created_at", { ascending: false }),
+  ]);
 
   const displayName = `${player.first_name} ${player.last_name}`.trim();
   const jerseyLabel =
@@ -116,6 +133,8 @@ export default async function PlayerDetailPage({ params }: Props) {
           initialItems={growthAreas ?? []}
         />
         <PrioritiesSection playerId={id} initialItems={priorities ?? []} />
+        <DrillsSection playerId={id} initialItems={drills ?? []} />
+        <FeedbackList items={feedback ?? []} />
       </div>
     </main>
   );

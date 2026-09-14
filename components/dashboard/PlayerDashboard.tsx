@@ -1,4 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
+import { PlayerFeedbackSection } from "./PlayerFeedbackSection";
+import { DrillsReadOnly } from "./DrillsReadOnly";
+import { AnchorsReadOnly } from "./AnchorsReadOnly";
+import { GrowthAreasReadOnly } from "./GrowthAreasReadOnly";
+import { PrioritiesReadOnly } from "./PrioritiesReadOnly";
 
 type Props = {
   displayName: string;
@@ -42,9 +47,51 @@ export async function PlayerDashboard({ displayName }: Props) {
   const { data: player } = user
     ? await supabase
         .from("players")
-        .select("date_birth, first_position, second_position, jersey_number, updated_at")
+        .select(
+          "id, date_birth, first_position, second_position, jersey_number, updated_at"
+        )
         .eq("user_id", user.id)
         .maybeSingle()
+    : { data: null };
+
+  const { data: feedback } = player
+    ? await supabase
+        .from("feedback")
+        .select("id, content, created_at")
+        .eq("player_id", player.id)
+        .order("created_at", { ascending: false })
+    : { data: null };
+
+  const { data: drills } = player
+    ? await supabase
+        .from("drills")
+        .select("id, title, description, status")
+        .eq("player_id", player.id)
+        .order("created_at", { ascending: true })
+    : { data: null };
+
+  const { data: anchors } = player
+    ? await supabase
+        .from("anchors")
+        .select("id, title, description")
+        .eq("player_id", player.id)
+        .order("created_at", { ascending: true })
+    : { data: null };
+
+  const { data: growthAreas } = player
+    ? await supabase
+        .from("growth_areas")
+        .select("id, title, description, category, status")
+        .eq("player_id", player.id)
+        .order("created_at", { ascending: true })
+    : { data: null };
+
+  const { data: priorities } = player
+    ? await supabase
+        .from("priorities")
+        .select("id, title, description, status")
+        .eq("player_id", player.id)
+        .order("created_at", { ascending: true })
     : { data: null };
 
   const positions = [player?.first_position, player?.second_position].filter(
@@ -88,35 +135,15 @@ export async function PlayerDashboard({ displayName }: Props) {
         )}
       </div>
 
-      <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
-        <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-          Anchors
-        </h2>
-        <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-          No data yet. Your coach will populate this section.
-        </p>
-      </section>
+      <AnchorsReadOnly items={anchors ?? []} />
 
-      <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
-        <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-          Growth Areas
-        </h2>
-        <p className="mt-1 text-xs text-[var(--color-ink-muted)]">
-          What to work on
-        </p>
-        <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-          No data yet. Your coach will populate this section.
-        </p>
-      </section>
+      <GrowthAreasReadOnly items={growthAreas ?? []} />
 
-      <section className="rounded-[6px] border border-[var(--color-line-default)] bg-[var(--color-surface-1)] p-5">
-        <h2 className="font-data text-xs uppercase tracking-[0.15em] text-[var(--color-court)]">
-          Priorities
-        </h2>
-        <p className="mt-3 text-sm text-[var(--color-ink-tertiary)]">
-          No data yet. Your coach will populate this section.
-        </p>
-      </section>
+      <PrioritiesReadOnly items={priorities ?? []} />
+
+      {player && <DrillsReadOnly items={drills ?? []} />}
+
+      {player && <PlayerFeedbackSection initialItems={feedback ?? []} />}
 
       {updatedAt && (
         <p className="text-xs text-[var(--color-ink-muted)]">
